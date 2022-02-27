@@ -4,4 +4,4 @@ interface ValidateError {
   field?: string
 }
 
-export type Field = Record<'username' | 'password', ValidateError[]>
+export type Field = Record<'name' | 'password', ValidateError[]>

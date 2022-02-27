@@ -14,6 +14,8 @@
       </el-tab-pane>
     </el-tabs>
 
+    <el-checkbox v-model="isSaveAccount" label="记住密码" class="save-account" />
+
     <el-button type="primary" class="login" @click="login">登录</el-button>
   </div>
 </template>
@@ -24,11 +26,16 @@ import { Avatar } from '@element-plus/icons-vue'
 import Account from './components/Account.vue'
 
 const activeTab = ref('account')
+const isSaveAccount = ref(false)
+
+if (localStorage.getItem('account')) {
+  isSaveAccount.value = true
+}
 
 const accountCpn = ref<InstanceType<typeof Account> | null>(null)
 
 const login = () => {
-  accountCpn.value?.login()
+  accountCpn.value?.login(isSaveAccount.value)
 }
 </script>
 
@@ -40,6 +47,12 @@ const login = () => {
   .login {
     width: 100%;
     margin-top: 20px;
+  }
+
+  .save-account {
+    display: flex;
+    justify-content: end;
+    margin-top: 10px;
   }
 }
 </style>

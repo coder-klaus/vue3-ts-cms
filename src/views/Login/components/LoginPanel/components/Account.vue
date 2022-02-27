@@ -1,11 +1,11 @@
 <template>
   <el-form ref="formEl" :model="account" label-width="70px" :rules="rules">
-    <el-form-item label="用户名" prop="username">
-      <el-input v-model="account.username"></el-input>
+    <el-form-item label="用户名" prop="name">
+      <el-input v-model="account.name"></el-input>
     </el-form-item>
 
     <el-form-item label="密码" prop="password">
-      <el-input v-model="account.password"></el-input>
+      <el-input v-model="account.password" show-password></el-input>
     </el-form-item>
   </el-form>
 </template>
@@ -13,17 +13,27 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { ElForm } from 'element-plus'
+import { useLoginStore } from '/src/store/index.ts'
 import { Field } from './type'
+
+const loginStore = useLoginStore()
 
 const formEl = ref<InstanceType<typeof ElForm>>()
 
+interface Account {
+  name: string
+  password: string
+}
+
+const accountdFromLocal: Account | undefined = JSON.parse(localStorage.getItem('account') || '{}')
+
 const account = reactive({
-  username: '',
-  password: ''
+  name: accountdFromLocal?.name ?? '',
+  password: accountdFromLocal?.password ?? ''
 })
 
 const rules = {
-  username: [
+  name: [
     {
       required: true,
       message: '请输入用户名',
@@ -31,8 +41,8 @@ const rules = {
     },
 
     {
-      pattern: /[a-z0-9A-Z]{5,10}/,
-      message: '用户名必须是5~10个字母或者数字~',
+      pattern: /[a-z0-9A-Z]{4,10}/,
+      message: '用户名必须是4~10个字母或者数字~',
       trigger: 'blur'
     }
   ],
@@ -52,18 +62,24 @@ const rules = {
   ]
 }
 
-const login = () => {
+const login = (isSaveAccount: boolean) => {
   if (!formEl.value) return
 
   formEl.value.validate((valid, fields) => {
     if (valid) {
-      console.log('login')
-    } else {
-      const { username, password } = fields as Field
+      if (isSaveAccount) {
+        localStorage.setItem('account', JSON.stringify(account))
+      } else {
+        localStorage.removeItem('account')
+      }
 
-      if (username) {
+      loginStore.login(account)
+    } else {
+      const { name, password } = fields as Field
+
+      if (name) {
         // eslint-disable-next-line no-undef
-        ElMessage.error(username[0].message)
+        ElMessage.error(name[0].message)
       } else if (password) {
         // eslint-disable-next-line no-undef
         ElMessage.error(password[0].message)

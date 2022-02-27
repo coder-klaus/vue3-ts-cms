@@ -1,10 +1,16 @@
 import axios from 'axios'
 import { ElLoading } from 'element-plus'
+import Cookies from 'js-cookie'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import type { LoadingInstance } from 'element-plus/es/components/loading/src/loading'
 import type { Config } from './type'
 
 import 'element-plus/theme-chalk/el-loading.css'
+
+interface IResponse {
+  code: number
+  data: unknown
+}
 
 export default class {
   instance: AxiosInstance
@@ -20,13 +26,15 @@ export default class {
       this.instance.interceptors.response.use(interceptor.responseInterceptor, interceptor.responseInterceptorCatch)
     }
 
-    this.registerGlobalInterceptor()
+    this.#registerGlobalInterceptor()
   }
 
-  registerGlobalInterceptor() {
+  #registerGlobalInterceptor() {
     this.instance.interceptors.request.use(
       (config: Config) => {
-        if (config?.showLoading ?? true) {
+        const customConfig = { ...config }
+
+        if (!this.loading && (customConfig?.showLoading ?? true)) {
           this.loading = ElLoading.service({
             lock: true,
             text: 'Loading...',
@@ -34,18 +42,24 @@ export default class {
           })
         }
 
-        return config
+        const token = Cookies.get('token')
+
+        if (token) {
+          customConfig.headers = { ...config.headers, Authorization: `Bearer ${token}` }
+        }
+
+        return customConfig
       },
-      (err) => err
+      err => err
     )
 
     this.instance.interceptors.response.use(
-      (res) => {
+      res => {
         this.loading?.close()
 
         return res.data
       },
-      (err) => {
+      err => {
         this.loading?.close()
         return err
       }
@@ -54,5 +68,13 @@ export default class {
 
   request(config: AxiosRequestConfig) {
     return this.instance.request(config)
+  }
+
+  get<R = IResponse>(url: string, config: AxiosRequestConfig = {}) {
+    return this.instance.get<unknown, R>(url, config)
+  }
+
+  post<T = unknown, R = IResponse>(url: string, data: T, config: AxiosRequestConfig = {}) {
+    return this.instance.post<unknown, R>(url, data, config)
   }
 }

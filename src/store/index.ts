@@ -1,4 +1,3 @@
-import { defineStore } from 'pinia'
+import useLoginStore from './modules/login'
 
-// eslint-disable-next-line import/prefer-default-export
-export const useStore = defineStore('store', {})
+export { useLoginStore }

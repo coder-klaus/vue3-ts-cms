@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import Cookies from 'js-cookie'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -21,6 +22,12 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   routes,
   history: createWebHistory()
+})
+
+router.beforeEach(to => {
+  const token = Cookies.get('token')
+
+  if (!token && to.path !== '/login') return '/login'
 })
 
 export default router
