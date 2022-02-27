@@ -1,9 +1,6 @@
 import Api from './api'
 
-import {
-  BASE_URL,
-  TIME_OUT
-} from './env'
+import { BASE_URL, TIME_OUT } from './env'
 
 const api = new Api({
   baseURL: BASE_URL,

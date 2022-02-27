@@ -8,6 +8,7 @@ import 'element-plus/theme-chalk/el-loading.css'
 
 export default class {
   instance: AxiosInstance
+
   loading: LoadingInstance | undefined
 
   constructor(config: Config) {
@@ -23,26 +24,32 @@ export default class {
   }
 
   registerGlobalInterceptor() {
-    this.instance.interceptors.request.use((config: Config) => {
-      if (config?.showLoading ?? true) {
-        this.loading =  ElLoading.service({
-          lock: true,
-          text: 'Loading...',
-          background: 'rgba(0, 0, 0, 0.7)',
-        })
+    this.instance.interceptors.request.use(
+      (config: Config) => {
+        if (config?.showLoading ?? true) {
+          this.loading = ElLoading.service({
+            lock: true,
+            text: 'Loading...',
+            background: 'rgba(0, 0, 0, 0.7)'
+          })
+        }
+
+        return config
+      },
+      (err) => err
+    )
+
+    this.instance.interceptors.response.use(
+      (res) => {
+        this.loading?.close()
+
+        return res.data
+      },
+      (err) => {
+        this.loading?.close()
+        return err
       }
-
-      return config
-    }, err => err)
-
-    this.instance.interceptors.response.use(res => {
-      this.loading?.close()
-
-      return res.data
-    }, err => {
-      this.loading?.close()
-      return err
-    })
+    )
   }
 
   request(config: AxiosRequestConfig) {
