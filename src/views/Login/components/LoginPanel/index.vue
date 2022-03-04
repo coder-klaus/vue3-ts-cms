@@ -32,7 +32,8 @@ if (localStorage.getItem('account')) {
   isSaveAccount.value = true
 }
 
-const accountCpn = ref<InstanceType<typeof Account> | null>(null)
+type AccountCpn = (InstanceType<typeof Account> & { login: (needSave: boolean) => void }) | null
+const accountCpn = ref<AccountCpn>(null)
 
 const login = () => {
   accountCpn.value?.login(isSaveAccount.value)

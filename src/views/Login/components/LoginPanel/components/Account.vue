@@ -13,7 +13,9 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { ElForm } from 'element-plus'
-import { useLoginStore } from '/src/store/index.ts'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+import { useLoginStore } from '/src/store'
 import { Field } from './type'
 
 const loginStore = useLoginStore()
@@ -78,10 +80,8 @@ const login = (isSaveAccount: boolean) => {
       const { name, password } = fields as Field
 
       if (name) {
-        // eslint-disable-next-line no-undef
         ElMessage.error(name[0].message)
       } else if (password) {
-        // eslint-disable-next-line no-undef
         ElMessage.error(password[0].message)
       }
     }
