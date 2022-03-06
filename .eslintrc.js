@@ -27,6 +27,10 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'import/no-absolute-path': 'off',
     'import/prefer-default-export': 'off',
-    'consistent-return': 'off'
+    'consistent-return': 'off',
+    'vue/no-v-for-template-key': 'off',
+    'no-plusplus': 'off',
+    'no-shadow': 'off',
+    'no-restricted-syntax': 'off'
   }
 }
