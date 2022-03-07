@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+import Cookies from 'js-cookie'
 import type { ElForm } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
@@ -27,7 +28,7 @@ interface Account {
   password: string
 }
 
-const accountdFromLocal: Account | undefined = JSON.parse(localStorage.getItem('account') || '{}')
+const accountdFromLocal: Account | undefined = JSON.parse(Cookies.get('account') || '{}')
 
 const account = reactive({
   name: accountdFromLocal?.name ?? '',
@@ -70,9 +71,9 @@ const login = (isSaveAccount: boolean) => {
   formEl.value.validate((valid, fields) => {
     if (valid) {
       if (isSaveAccount) {
-        localStorage.setItem('account', JSON.stringify(account))
+        Cookies.set('account', JSON.stringify(account), { expires: 365 })
       } else {
-        localStorage.removeItem('account')
+        Cookies.remove('account')
       }
 
       loginStore.login(account)

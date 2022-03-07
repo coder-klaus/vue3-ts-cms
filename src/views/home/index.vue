@@ -18,7 +18,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-// HARD CODE 无法自动解析index.vue
 import Menu from '/src/components/Menu/index.vue'
 import Header from '/src/components/Header/index.vue'
 

@@ -28,9 +28,10 @@ export default defineStore('loginStore', () => {
     const { token, id } = data
 
     tokenRef.value = token
-    Cookies.set('token', token)
+    Cookies.set('token', token, { expires: 365 })
 
     fetchUserInfo(id)
+
     fetchMenu(id)
 
     router.push('/main')
