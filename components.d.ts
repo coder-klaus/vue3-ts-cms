@@ -32,6 +32,7 @@ declare module 'vue' {
     Form: typeof import('./src/components/Form/index.vue')['default']
     Header: typeof import('./src/components/Header/index.vue')['default']
     Menu: typeof import('./src/components/Menu/index.vue')['default']
+    Sidebar: typeof import('./src/components/Sidebar/index.vue')['default']
     Types: typeof import('./src/components/Form/types.vue')['default']
     UserInfo: typeof import('./src/components/Header/components/UserInfo.vue')['default']
   }
