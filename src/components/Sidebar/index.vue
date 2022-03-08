@@ -53,10 +53,10 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLoginStore } from '/src/store'
 import { IMenu } from '/src/types'
-
-const store = useLoginStore()
+import menuMap from '/src/utils/menuMap'
 
 const route = useRoute()
+const store = useLoginStore()
 
 // eslint-disable-next-line no-undef
 defineProps({
@@ -65,6 +65,10 @@ defineProps({
     default: false
   }
 })
+
+const menus = store.menusRef
+
+const activeIndex = ref(0)
 
 // 对后端返回的icon字符串 进行格式化
 function formatIcon(menus: IMenu[]) {
@@ -81,49 +85,23 @@ function formatIcon(menus: IMenu[]) {
   }
 }
 
-const menus = store.menusRef
-const menuMap: Map<string, IMenu> = new Map()
-
-const generateMenuMap = (menus: IMenu[]) => {
-  for (const menu of menus) {
-    if (menu.url) {
-      menuMap.set(menu.url, menu)
-    }
-
-    if (menu.children) {
-      generateMenuMap(menu.children)
-    }
-  }
-
-  return menuMap
-}
-
-const activeIndex = ref(0)
-
-const calcActiveIndex = (menus: IMenu[]) => {
-  generateMenuMap(menus)
-  const currentPath = route.path
-
-  const currentRoute = menuMap.get(currentPath)
-
-  if (currentRoute) {
-    activeIndex.value = currentRoute.id
-  }
-}
-
 if (menus) {
   formatIcon(menus)
-  calcActiveIndex(menus)
 }
 
 watch(
   () => route.path,
   newV => {
-    const currentRoute = menuMap.get(newV)
+    if (menus) {
+      const currentRoute = menuMap.get(newV)
 
-    if (currentRoute) {
-      activeIndex.value = currentRoute.id
+      if (currentRoute) {
+        activeIndex.value = currentRoute.id
+      }
     }
+  },
+  {
+    immediate: true
   }
 )
 </script>
@@ -133,8 +111,5 @@ watch(
   height: 100%;
   background-color: #001529;
   border-right: none;
-}
-
-.foo {
 }
 </style>

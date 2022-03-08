@@ -1,7 +1,7 @@
 <template>
   <el-container class="main">
     <el-aside :width="collapse ? '60px' : '210px'">
-      <Menu :collapse="collapse" />
+      <Sidebar :collapse="collapse" />
     </el-aside>
     <el-container class="page">
       <el-header class="page-header">
@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Menu from '/src/components/Menu/index.vue'
+import Sidebar from '/src/components/Sidebar/index.vue'
 import Header from '/src/components/Header/index.vue'
 
 const collapse = ref(false)

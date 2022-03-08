@@ -4,7 +4,10 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    BreadCrumb: typeof import('./src/components/BreadCrumb/BreadCrumb.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
+    ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElCol: typeof import('element-plus/es')['ElCol']
@@ -31,9 +34,7 @@ declare module 'vue' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     Form: typeof import('./src/components/Form/index.vue')['default']
     Header: typeof import('./src/components/Header/index.vue')['default']
-    Menu: typeof import('./src/components/Menu/index.vue')['default']
     Sidebar: typeof import('./src/components/Sidebar/index.vue')['default']
-    Types: typeof import('./src/components/Form/types.vue')['default']
     UserInfo: typeof import('./src/components/Header/components/UserInfo.vue')['default']
   }
 }

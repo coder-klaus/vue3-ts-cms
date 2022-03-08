@@ -6,25 +6,58 @@
     </el-icon>
 
     <div class="content">
-      <div>bread</div>
+      <BreadCrumb :crumbs="readonly(crumbs)" />
       <UserInfo />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, readonly } from 'vue'
+import { useRoute } from 'vue-router'
+import BreadCrumb from '../BreadCrumb'
 import UserInfo from './components/UserInfo.vue'
+import { ICrumb } from '/src/components/BreadCrumb'
+import menuMap from '/src/utils/menuMap'
 
 // eslint-disable-next-line no-undef
 const emit = defineEmits(['changeCollapse'])
 
 const isExpend = ref(false)
+const route = useRoute()
+const crumbs = ref<ICrumb[]>([])
 
 const handleClick = () => {
   isExpend.value = !isExpend.value
   emit('changeCollapse', isExpend.value)
 }
+
+const generateCrumbs = (path: string) => {
+  if (!path.length) return
+
+  const menu = menuMap.get(path)
+
+  if (menu) {
+    crumbs.value.unshift({
+      path,
+      name: menu.name
+    })
+  }
+  const paths = path.split('/')
+  paths.pop()
+  generateCrumbs(paths.join('/'))
+}
+
+watch(
+  () => route.path,
+  newV => {
+    crumbs.value = []
+    generateCrumbs(newV)
+  },
+  {
+    immediate: true
+  }
+)
 </script>
 
 <style scoped lang="scss">
