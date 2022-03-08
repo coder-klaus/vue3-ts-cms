@@ -32,8 +32,8 @@ declare module 'vue' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
-    Form: typeof import('./src/components/Form/index.vue')['default']
     Header: typeof import('./src/components/Header/index.vue')['default']
+    SearchBar: typeof import('./src/components/SearchBar/index.vue')['default']
     Sidebar: typeof import('./src/components/Sidebar/index.vue')['default']
     UserInfo: typeof import('./src/components/Header/components/UserInfo.vue')['default']
   }

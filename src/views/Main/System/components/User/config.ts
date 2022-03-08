@@ -1,16 +1,18 @@
-import { FormConfig, Config } from '/src/components/Form/types'
+import { FormConfig, Config } from '/src/components/SearchBar/types'
 
 export const configs: Config[] = [
   {
     type: 'input',
     label: '用户id',
-    placeholder: '请输入id'
+    placeholder: '请输入id',
+    field: 'id'
   },
 
   {
     type: 'input',
     label: '用户名',
-    placeholder: '请输入用户名'
+    placeholder: '请输入用户名',
+    field: 'name'
   },
 
   {
@@ -20,7 +22,8 @@ export const configs: Config[] = [
     options: [
       { label: '篮球', value: 'basketball' },
       { label: '足球', value: 'football' }
-    ]
+    ],
+    field: 'sport'
   },
 
   {
@@ -30,7 +33,8 @@ export const configs: Config[] = [
       startPlaceholder: '开始时间',
       endPlaceholder: '结束时间',
       type: 'daterange'
-    }
+    },
+    field: 'createTime'
   }
 ]
 

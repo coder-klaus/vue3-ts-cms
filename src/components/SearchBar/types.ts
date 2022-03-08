@@ -5,7 +5,15 @@ type Option = {
   value: string
 }
 
+export interface IUser {
+  id: string
+  name: string
+  sport: string
+  createTime: Date[]
+}
+
 export interface Config {
+  field: keyof IUser
   type: ConfigType
   label: string
   rules?: unknown[]

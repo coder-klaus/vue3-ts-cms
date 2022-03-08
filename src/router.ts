@@ -32,9 +32,13 @@ const router = createRouter({
   history: createWebHistory()
 })
 
-for (const route of asyncRoute) {
-  router.addRoute('main', route)
+export function registerAsyncRoutes(asyncRoute: RouteRecordRaw[]) {
+  for (const route of asyncRoute) {
+    router.addRoute('main', route)
+  }
 }
+
+registerAsyncRoutes(asyncRoute)
 
 router.beforeEach(to => {
   const token = Cookies.get('token')

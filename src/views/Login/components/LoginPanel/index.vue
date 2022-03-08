@@ -26,9 +26,9 @@ import { Avatar } from '@element-plus/icons-vue'
 import Account from './components/Account.vue'
 
 const activeTab = ref('account')
-const isSaveAccount = ref(false)
+const isSaveAccount = ref(true)
 
-if (localStorage.getItem('account')) {
+if (localStorage.getItem('account') && !isSaveAccount.value) {
   isSaveAccount.value = true
 }
 
