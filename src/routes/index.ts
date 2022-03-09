@@ -2,8 +2,10 @@ import type { RouteRecordRaw } from 'vue-router'
 import { IMenu } from '/src/types'
 import systemRouter from './system'
 import analysisRouter from './analysis'
+import productRouter from './product'
+import storyRouter from './story'
 
-const asyncRoutes: RouteRecordRaw[] = [...systemRouter, ...analysisRouter]
+const asyncRoutes: RouteRecordRaw[] = [...systemRouter, ...analysisRouter, ...productRouter, ...storyRouter]
 
 const menus = JSON.parse(localStorage.getItem('menus') ?? '[]')
 

@@ -2,41 +2,26 @@ export default [
   {
     path: '/main/system',
     redirect: '/main/system/user',
-    component: () => import('/src/views/Main/System/index.vue'),
-    meta: {
-      title: '系统管理'
-    }
+    component: () => import('/src/views/index.vue')
   },
 
   {
     path: '/main/system/user',
-    component: () => import('../views/Main/System/components/User/index.vue'),
-    meta: {
-      title: '用户管理'
-    }
+    component: () => import('/src/views/System/User/index.vue')
   },
 
   {
     path: '/main/system/department',
-    component: () => import('/src/views/Main/System/components/Department.vue'),
-    meta: {
-      title: '部门管理'
-    }
+    component: () => import('../views/System/Department.vue')
   },
 
   {
     path: '/main/system/menu',
-    component: () => import('/src/views/Main/System/components/Menu.vue'),
-    meta: {
-      title: '菜单管理'
-    }
+    component: () => import('../views/System/Menu.vue')
   },
 
   {
     path: '/main/system/role',
-    component: () => import('/src/views/Main/System/components/Role.vue'),
-    meta: {
-      title: '角色管理'
-    }
+    component: () => import('../views/System/Role.vue')
   }
 ]

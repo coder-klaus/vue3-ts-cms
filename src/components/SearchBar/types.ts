@@ -5,7 +5,7 @@ type Option = {
   value: string
 }
 
-export interface IUser {
+export interface ISearchUser {
   id: string
   name: string
   sport: string
@@ -13,7 +13,7 @@ export interface IUser {
 }
 
 export interface Config {
-  field: keyof IUser
+  field: keyof ISearchUser
   type: ConfigType
   label: string
   rules?: unknown[]

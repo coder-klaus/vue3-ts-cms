@@ -18,7 +18,7 @@ const routes: RouteRecordRaw[] = [
     path: '/main',
     redirect: '/main/analysis/overview',
     name: 'main',
-    component: () => import('./views/Home/index.vue')
+    component: () => import('./views/index.vue')
   },
 
   {
