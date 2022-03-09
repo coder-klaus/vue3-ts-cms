@@ -10,7 +10,6 @@ import 'normalize.css'
 
 const app = createApp(App)
 app.use(createPinia())
-app.use(router)
 
 Object.keys(Icons).forEach(key => {
   app.component(key, Icons[key as keyof typeof Icons])
@@ -18,5 +17,7 @@ Object.keys(Icons).forEach(key => {
 
 const store = useLoginStore()
 store.initStore()
+
+app.use(router)
 
 app.mount('#app')

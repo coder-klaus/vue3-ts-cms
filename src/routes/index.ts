@@ -21,7 +21,7 @@ function getRouteMap() {
 
 const routeMap = getRouteMap()
 
-function generateRoutes(menus: IMenu[]) {
+export function generateRoutes(menus: IMenu[]) {
   const routes: RouteRecordRaw[] = []
 
   for (const menu of menus) {

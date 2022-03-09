@@ -70,13 +70,13 @@ const menus = store.menusRef
 
 const activeIndex = ref(0)
 
-// 对后端返回的icon字符串 进行格式化
+// 对后端返回的icon字符串 进行格式化 --- 兼容老版本的element-plus
+// 重复执行了多次 --- HARD CODE temp
 function formatIcon(menus: IMenu[]) {
   for (let i = 0; i < menus.length; i++) {
     const menu = menus[i]
-    if (menu.icon) {
-      // eslint-disable-next-line prefer-destructuring
-      menu.icon = menu.icon.split('-')[2]
+    if (menu.icon && menu.icon.startsWith('el-icon')) {
+      menu.icon = menu.icon.split('-').slice(2).join('-')
     }
 
     if (menu.children) {

@@ -13,12 +13,12 @@
                 <el-input
                   v-bind="config.otherOptions"
                   :show-password="config.type === 'password'"
-                  v-model="user[config.field]"
+                  v-model="userRef[config.field]"
                 />
               </template>
 
               <template v-else-if="config.type === 'select'">
-                <el-select v-bind="config.otherOptions" class="precent" v-model="user[config.field]">
+                <el-select v-bind="config.otherOptions" class="precent" v-model="userRef[config.field]">
                   <el-option v-for="option in config.options" :key="option.value" :value="option.value">
                     {{ option.label }}
                   </el-option>
@@ -26,7 +26,7 @@
               </template>
 
               <template v-else-if="config.type === 'datepicker'">
-                <el-date-picker v-bind="config.otherOptions" class="precent" v-model="user[config.field]" />
+                <el-date-picker v-bind="config.otherOptions" class="precent" v-model="userRef[config.field]" />
               </template>
             </el-form-item>
           </el-col>
@@ -41,8 +41,8 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, reactive, watch } from 'vue'
-import { Config, IUser } from './types'
+import { PropType, ref, watch } from 'vue'
+import { Config, ISearchUser } from './types'
 
 // eslint-disable-next-line no-undef
 const emit = defineEmits(['update:modelValue'])
@@ -50,7 +50,7 @@ const emit = defineEmits(['update:modelValue'])
 // eslint-disable-next-line no-undef
 const props = defineProps({
   modelValue: {
-    type: Object as PropType<IUser>,
+    type: Object as PropType<ISearchUser>,
     required: true
   },
 
@@ -79,10 +79,10 @@ const props = defineProps({
 
 const { configs, modelValue } = props
 
-const user = reactive({ ...modelValue })
+const userRef = ref({ ...modelValue })
 
 watch(
-  user,
+  userRef,
   newV => {
     emit('update:modelValue', newV)
   },

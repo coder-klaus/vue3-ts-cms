@@ -1,5 +1,5 @@
 <template>
-  <SearchBar v-bind="formConfig" v-model="user">
+  <SearchBar v-bind="formConfig" v-model="userRef">
     <template #header> 表单检索 </template>
   </SearchBar>
 
@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import dayjs from 'dayjs'
 import { getUsers } from '/src/api/users'
 import SearchBar from '/src/components/SearchBar/index.vue'
@@ -38,7 +38,7 @@ interface IRes {
 const totalRef = ref(0)
 const usersRef = ref<IUser[]>([])
 
-const user: ISearchUser = reactive({
+const userRef: ISearchUser = ref({
   id: '',
   name: '',
   sport: '',

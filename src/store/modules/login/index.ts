@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import Cookies from 'js-cookie'
 import { ref } from 'vue'
-import router from '../../../router'
+import router, { registerAsyncRoutes } from '/src/router'
+import { generateRoutes } from '/src/routes'
 import { userLogin, getUserInfo, getMenu } from '/src/api/login'
 import { IAccount, ILoginType, IUserInfo } from './types'
 import { IResponseType, IMenu } from '/src/types'
@@ -32,7 +33,11 @@ export default defineStore('loginStore', () => {
 
     fetchUserInfo(id)
 
-    fetchMenu(id)
+    await fetchMenu(id)
+
+    if (menusRef.value) {
+      registerAsyncRoutes(generateRoutes(menusRef.value))
+    }
 
     router.push('/main')
   }
