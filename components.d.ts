@@ -30,11 +30,16 @@ declare module 'vue' {
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    ElTag: typeof import('element-plus/es')['ElTag']
     Header: typeof import('./src/components/Header/index.vue')['default']
+    Menu: typeof import('./src/components/Menu/index.vue')['default']
     SearchBar: typeof import('./src/components/SearchBar/index.vue')['default']
     Sidebar: typeof import('./src/components/Sidebar/index.vue')['default']
+    Table: typeof import('./src/components/Table/index.vue')['default']
     UserInfo: typeof import('./src/components/Header/components/UserInfo.vue')['default']
   }
 }
