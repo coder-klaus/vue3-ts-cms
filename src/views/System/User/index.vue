@@ -1,23 +1,25 @@
 <template>
-  <SearchBar v-bind="formConfig" v-model="userRef">
-    <template #header> 表单检索 </template>
-  </SearchBar>
+  <div>
+    <SearchBar v-bind="formConfig" v-model="userRef">
+      <template #header> 表单检索 </template>
+    </SearchBar>
 
-  <Table :configs="tableConfig" :tableData="usersRef" class="user-table">
-    <template #status="{ row: { enable } }">
-      <el-tag :type="enable === 1 ? 'success' : 'danger'">
-        {{ enable === 1 ? '开启' : '封禁' }}
-      </el-tag>
-    </template>
+    <Table :configs="tableConfig" :tableData="usersRef" class="user-table">
+      <template #status="{ row: { enable } }">
+        <el-tag :type="enable === 1 ? 'success' : 'danger'">
+          {{ enable === 1 ? '开启' : '封禁' }}
+        </el-tag>
+      </template>
 
-    <template #createAt="{ row: { createAt } }">
-      {{ dayjs(createAt).format('YYYY-MM-DD HH:mm:ss') }}
-    </template>
+      <template #createAt="{ row: { createAt } }">
+        {{ dayjs(createAt).format('YYYY-MM-DD HH:mm:ss') }}
+      </template>
 
-    <template #updateAt="{ row: { updateAt } }">
-      {{ dayjs(updateAt).format('YYYY-MM-DD HH:mm:ss') }}
-    </template>
-  </Table>
+      <template #updateAt="{ row: { updateAt } }">
+        {{ dayjs(updateAt).format('YYYY-MM-DD HH:mm:ss') }}
+      </template>
+    </Table>
+  </div>
 </template>
 
 <script setup lang="ts">

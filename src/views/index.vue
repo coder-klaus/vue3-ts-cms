@@ -9,9 +9,15 @@
       </el-header>
       <el-main class="page-content">
         <div class="content">
-          <!-- <Transition mode="out-in"> -->
-          <router-view />
-          <!-- </Transition> -->
+          <router-view v-slot="{ Component }">
+            <Transition
+              mode="out-in"
+              enter-active-class="animate__animated animate__fadeInRight"
+              leave-active-class="animate__animated animate__fadeOutLeft"
+            >
+              <component :is="Component" />
+            </Transition>
+          </router-view>
         </div>
       </el-main>
     </el-container>

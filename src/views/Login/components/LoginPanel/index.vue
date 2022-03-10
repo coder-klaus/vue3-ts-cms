@@ -1,7 +1,7 @@
 <template>
   <div class="login-panel">
     <h1>vue3-ts-cms</h1>
-    <el-tabs type="border-card" class="demo-tabs" stretch v-model="activeTab">
+    <el-tabs type="border-card" stretch v-model="activeTab">
       <el-tab-pane name="account">
         <template #label>
           <span>
