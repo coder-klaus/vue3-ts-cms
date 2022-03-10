@@ -12,16 +12,16 @@ export default [
 
   {
     path: '/main/system/department',
-    component: () => import('../views/System/Department.vue')
+    component: () => import('/src/views/System/Department.vue')
   },
 
   {
     path: '/main/system/menu',
-    component: () => import('../views/System/Menu.vue')
+    component: () => import('/src/views/System/Menu.vue')
   },
 
   {
     path: '/main/system/role',
-    component: () => import('../views/System/Role.vue')
+    component: () => import('/src/views/System/Role.vue')
   }
 ]

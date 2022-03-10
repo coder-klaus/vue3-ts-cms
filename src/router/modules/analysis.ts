@@ -7,11 +7,11 @@ export default [
 
   {
     path: '/main/analysis/overview',
-    component: () => import('../views/Analysis/Overview.vue')
+    component: () => import('/src/views/Analysis/Overview.vue')
   },
 
   {
     path: '/main/analysis/dashboard',
-    component: () => import('../views/Analysis/Dashboard.vue')
+    component: () => import('/src/views/Analysis/Dashboard.vue')
   }
 ]

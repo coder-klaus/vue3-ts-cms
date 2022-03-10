@@ -1,7 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Cookies from 'js-cookie'
-import asyncRoute from '/src/routes'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -11,19 +9,19 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: '/login',
-    component: () => import('./views/Login/index.vue')
+    component: () => import('../views/Login/index.vue')
   },
 
   {
     path: '/main',
     redirect: '/main/analysis/overview',
     name: 'main',
-    component: () => import('./views/index.vue')
+    component: () => import('../App.vue')
   },
 
   {
     path: '/:notFound(.*)',
-    component: () => import('./views/NotFound.vue')
+    component: () => import('../views/NotFound.vue')
   }
 ]
 
@@ -37,8 +35,6 @@ export function registerAsyncRoutes(asyncRoute: RouteRecordRaw[]) {
     router.addRoute('main', route)
   }
 }
-
-registerAsyncRoutes(asyncRoute)
 
 router.beforeEach(to => {
   const token = Cookies.get('token')

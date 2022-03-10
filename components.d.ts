@@ -4,7 +4,7 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    BreadCrumb: typeof import('./src/components/BreadCrumb/BreadCrumb.vue')['default']
+    BreadCrumb: typeof import('./src/components/Header/components/BreadCrumb/BreadCrumb.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']

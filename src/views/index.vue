@@ -9,7 +9,9 @@
       </el-header>
       <el-main class="page-content">
         <div class="content">
+          <!-- <Transition mode="out-in"> -->
           <router-view />
+          <!-- </Transition> -->
         </div>
       </el-main>
     </el-container>

@@ -7,11 +7,11 @@ export default [
 
   {
     path: '/main/product/category',
-    component: () => import('../views/Product/Category.vue')
+    component: () => import('/src/views/Product/Category.vue')
   },
 
   {
     path: '/main/product/goods',
-    component: () => import('../views/Product/Goods.vue')
+    component: () => import('/src/views/Product/Goods.vue')
   }
 ]

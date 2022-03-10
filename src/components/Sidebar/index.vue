@@ -70,12 +70,11 @@ const menus = store.menusRef
 
 const activeIndex = ref(0)
 
-// 对后端返回的icon字符串 进行格式化 --- 兼容老版本的element-plus
-// 重复执行了多次 --- HARD CODE temp
+// 兼容老版本的@element-plus/icons --- 去除el-icon前缀
 function formatIcon(menus: IMenu[]) {
   for (let i = 0; i < menus.length; i++) {
     const menu = menus[i]
-    if (menu.icon && menu.icon.startsWith('el-icon')) {
+    if (menu.icon) {
       menu.icon = menu.icon.split('-').slice(2).join('-')
     }
 

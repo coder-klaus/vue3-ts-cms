@@ -15,9 +15,8 @@
 <script setup lang="ts">
 import { ref, watch, readonly } from 'vue'
 import { useRoute } from 'vue-router'
-import BreadCrumb from '../BreadCrumb'
+import BreadCrumb, { ICrumb } from './components/BreadCrumb'
 import UserInfo from './components/UserInfo.vue'
-import { ICrumb } from '/src/components/BreadCrumb'
 import menuMap from '/src/utils/menuMap'
 
 // eslint-disable-next-line no-undef

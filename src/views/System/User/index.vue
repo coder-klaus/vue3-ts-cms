@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
 import dayjs from 'dayjs'
 import { getUsers } from '/src/api/users'
 import SearchBar from '/src/components/SearchBar/index.vue'
@@ -38,7 +38,7 @@ interface IRes {
 const totalRef = ref(0)
 const usersRef = ref<IUser[]>([])
 
-const userRef: ISearchUser = ref({
+const userRef: Ref<ISearchUser> = ref({
   id: '',
   name: '',
   sport: '',
