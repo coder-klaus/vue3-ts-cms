@@ -10,11 +10,7 @@
       <el-main class="page-content">
         <div class="content">
           <router-view v-slot="{ Component }">
-            <Transition
-              mode="out-in"
-              enter-active-class="animate__animated animate__fadeInRight"
-              leave-active-class="animate__animated animate__fadeOutLeft"
-            >
+            <Transition mode="out-in" name="fade">
               <component :is="Component" />
             </Transition>
           </router-view>
@@ -62,7 +58,7 @@ const handleChangeCollapse = () => {
   color: #333;
   text-align: center;
   align-items: center;
-  height: 48px !important;
+  height: 48px;
 }
 
 .el-aside {
@@ -83,5 +79,14 @@ const handleChangeCollapse = () => {
   color: #333;
   text-align: center;
   background-color: #f0f2f5;
+}
+
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-avtive {
+  transition: all 0.5s ease;
 }
 </style>

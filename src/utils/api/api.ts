@@ -1,21 +1,21 @@
 import axios from 'axios'
-import { ElLoading } from 'element-plus'
 import Cookies from 'js-cookie'
+import NProgress from 'nprogress'
+
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
-import type { LoadingInstance } from 'element-plus/es/components/loading/src/loading'
 import type { Config } from './type'
 
-import 'element-plus/theme-chalk/el-loading.css'
+import 'nprogress/nprogress.css'
 
 interface IResponse {
   code: number
   data: unknown
 }
 
+NProgress.configure({ showSpinner: false })
+
 export default class {
   instance: AxiosInstance
-
-  loading: LoadingInstance | undefined
 
   constructor(config: Config) {
     this.instance = axios.create(config)
@@ -34,13 +34,7 @@ export default class {
       (config: Config) => {
         const customConfig = { ...config }
 
-        if (!this.loading && (customConfig?.showLoading ?? true)) {
-          this.loading = ElLoading.service({
-            lock: true,
-            text: 'Loading...',
-            background: 'rgba(0, 0, 0, 0.7)'
-          })
-        }
+        NProgress.start()
 
         const token = Cookies.get('token')
 
@@ -55,12 +49,12 @@ export default class {
 
     this.instance.interceptors.response.use(
       res => {
-        this.loading?.close()
+        NProgress.done()
 
         return res.data
       },
       err => {
-        this.loading?.close()
+        NProgress.done()
         return err
       }
     )

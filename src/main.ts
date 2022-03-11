@@ -7,7 +7,6 @@ import App from './App.vue'
 import { useLoginStore } from './store/index'
 
 import 'normalize.css'
-import 'animate.css'
 
 const app = createApp(App)
 app.use(createPinia())

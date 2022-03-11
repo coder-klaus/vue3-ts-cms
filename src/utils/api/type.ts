@@ -9,5 +9,4 @@ export interface Interceptor {
 
 export interface Config extends AxiosRequestConfig {
   interceptor?: Interceptor
-  showLoading?: boolean
 }
