@@ -31,6 +31,8 @@ module.exports = {
     'vue/no-v-for-template-key': 'off',
     'no-plusplus': 'off',
     'no-shadow': 'off',
-    'no-restricted-syntax': 'off'
+    'no-restricted-syntax': 'off',
+    'vue/no-v-model-argument': 'off',
+    'guard-for-in': 'off'
   }
 }

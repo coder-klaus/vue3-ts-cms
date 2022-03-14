@@ -17,11 +17,11 @@ export default [
 
   {
     path: '/main/system/menu',
-    component: () => import('/src/views/System/Menu.vue')
+    component: () => import('../../views/System/Menu/index.vue')
   },
 
   {
     path: '/main/system/role',
-    component: () => import('/src/views/System/Role.vue')
+    component: () => import('../../views/System/Role/index.vue')
   }
 ]

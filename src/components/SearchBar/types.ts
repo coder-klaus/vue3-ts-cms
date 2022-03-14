@@ -5,15 +5,8 @@ type Option = {
   value: string
 }
 
-export interface ISearchUser {
-  id: string
-  name: string
-  sport: string
-  createTime: Date[]
-}
-
-export interface Config {
-  field: keyof ISearchUser
+export interface Config<T> {
+  field: keyof T
   type: ConfigType
   label: string
   rules?: unknown[]
@@ -35,8 +28,8 @@ type Layout =
       xs: number
     }
 
-export interface FormConfig {
-  configs: Config[]
+export interface FormConfig<T> {
+  configs: Config<T>[]
   labelWidth?: string
   colLayout?: Layout
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -11,6 +11,7 @@ export default defineStore('loginStore', () => {
   const tokenRef = ref('')
   const userInfoRef = ref<IUserInfo | null>(null)
   const menusRef = ref<IMenu[] | null>(null)
+  const pressmissionsRef = ref<string[]>([])
 
   async function fetchUserInfo(id: number) {
     const { data } = await getUserInfo<IResponseType<IUserInfo>>(id)
@@ -42,6 +43,24 @@ export default defineStore('loginStore', () => {
     router.push('/main')
   }
 
+  const calcPressmissions = (menus: IMenu[]) => {
+    const pressmissions: string[] = []
+
+    const rescureMenuToPressmission = (menus: IMenu[]) => {
+      for (const menu of menus) {
+        if (menu.permission) {
+          pressmissions.push(menu.permission)
+        } else if (menu.children) {
+          rescureMenuToPressmission(menu.children)
+        }
+      }
+    }
+
+    rescureMenuToPressmission(menus)
+
+    return pressmissions
+  }
+
   function initStore() {
     tokenRef.value = Cookies.get('token') || ''
     userInfoRef.value = JSON.parse(localStorage.getItem('userInfo') ?? '{}')
@@ -49,6 +68,7 @@ export default defineStore('loginStore', () => {
 
     if (menusRef.value) {
       registerAsyncRoutes(generateRoutes(menusRef.value))
+      pressmissionsRef.value = calcPressmissions(menusRef.value)
     }
   }
 
@@ -56,6 +76,7 @@ export default defineStore('loginStore', () => {
     tokenRef,
     userInfoRef,
     menusRef,
+    pressmissionsRef,
     login,
     fetchUserInfo,
     fetchMenu,

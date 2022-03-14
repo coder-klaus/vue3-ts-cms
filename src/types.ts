@@ -10,5 +10,11 @@ export interface IMenu {
   url: string
   icon: string
   sort: number
+  permission: string
   children?: IMenu[]
+}
+
+export interface IFetch {
+  offset: number
+  size: number
 }

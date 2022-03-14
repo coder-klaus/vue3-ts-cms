@@ -1,36 +1,42 @@
 <template>
   <div>
-    <SearchBar v-bind="formConfig" v-model="userRef">
+    <SearchBar v-bind="formConfig" v-model="userRef" @search="search">
       <template #header> 表单检索 </template>
+      <template #footer>
+        <div class="search-footer">
+          <el-button size="small" type="warning" plain @click="reset">重置</el-button>
+          <el-button size="small" type="primary" plain @click="search"> 搜索 </el-button>
+        </div>
+      </template>
     </SearchBar>
 
-    <Table :configs="tableConfig" :tableData="usersRef" class="user-table">
+    <FormTable
+      :config="tableConfig"
+      :data="usersRef"
+      :query-data="userRef"
+      :total="totalRef"
+      @fetchData="fetchUsers"
+      pagename="users"
+    >
       <template #status="{ row: { enable } }">
         <el-tag :type="enable === 1 ? 'success' : 'danger'">
           {{ enable === 1 ? '开启' : '封禁' }}
         </el-tag>
       </template>
-
-      <template #createAt="{ row: { createAt } }">
-        {{ dayjs(createAt).format('YYYY-MM-DD HH:mm:ss') }}
-      </template>
-
-      <template #updateAt="{ row: { updateAt } }">
-        {{ dayjs(updateAt).format('YYYY-MM-DD HH:mm:ss') }}
-      </template>
-    </Table>
+    </FormTable>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue'
-import dayjs from 'dayjs'
-import { getUsers } from '/src/api/users'
+import { ref } from 'vue'
 import SearchBar from '/src/components/SearchBar/index.vue'
-import Table from '/src/components/Table/index.vue'
-import { ISearchUser } from '/src/components/SearchBar/types'
-import { formConfig, tableConfig } from './config'
-import { IFetchUser, IUser } from './types'
+import FormTable from '/src/components/FormTable/index.vue'
+import { getList } from '../../../api/fetch'
+import { checkPremission } from '/src/hooks/usePremission'
+import { formConfig } from './config/search.config'
+import { tableConfig } from './config/table.config'
+import { IFetch } from '/src/types'
+import { IUser } from './types'
 
 interface IRes {
   list: IUser[]
@@ -40,17 +46,24 @@ interface IRes {
 const totalRef = ref(0)
 const usersRef = ref<IUser[]>([])
 
-const userRef: Ref<ISearchUser> = ref({
+const isQuery = checkPremission('users', 'query')
+
+const defaultUser = {
   id: '',
   name: '',
-  sport: '',
-  createTime: []
-})
+  cellphone: '',
+  createAt: ''
+}
 
-const fetchUsers = async () => {
-  const { data: res } = await getUsers<IFetchUser, IRes>({
+const userRef = ref<Partial<IUser>>(defaultUser)
+
+const fetchUsers = async (query: Partial<IUser> = {}) => {
+  if (!isQuery) return false
+
+  const { data: res } = await getList<Partial<IUser> & IFetch, IRes>('users', {
     offset: 0,
-    size: 10
+    size: 10,
+    ...query
   })
 
   const { list: users, totalCount: total } = res
@@ -58,12 +71,18 @@ const fetchUsers = async () => {
   usersRef.value = users
 }
 
+const reset = async () => {
+  userRef.value = defaultUser
+  fetchUsers(userRef.value)
+}
+
+const search = () => fetchUsers(userRef.value)
+
 fetchUsers()
 </script>
 
 <style lang="scss" scoped>
-.user-table {
-  padding: 15px;
-  border-top: 10px solid #f0f2f5;
+.search-footer {
+  text-align: right;
 }
 </style>
