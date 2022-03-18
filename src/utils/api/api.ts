@@ -71,4 +71,8 @@ export default class {
   post<T = unknown, R = IResponse>(url: string, data: T, config: AxiosRequestConfig = {}) {
     return this.instance.post<unknown, R>(url, data, config)
   }
+
+  delete<R = IResponse>(url: string) {
+    return this.instance.delete<unknown, R>(url)
+  }
 }

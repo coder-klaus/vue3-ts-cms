@@ -1,14 +1,16 @@
 <template>
   <div>
-    <SearchBar v-bind="formConfig" v-model="roleRef" @search="search">
-      <template #header> 表单检索 </template>
+    <Form v-bind="formConfig" v-model="roleRef" @search="search">
+      <template #header>
+        <div class="header">表单检索</div>
+      </template>
       <template #footer>
         <div class="search-footer">
           <el-button size="small" type="warning" plain @click="reset">重置</el-button>
           <el-button size="small" type="primary" plain @click="search"> 搜索 </el-button>
         </div>
       </template>
-    </SearchBar>
+    </Form>
 
     <FromTable
       :config="tableConfig"
@@ -23,7 +25,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import SearchBar from '/src/components/SearchBar/index.vue'
+import Form from '/src/components/Form/index.vue'
 import FromTable from '/src/components/FormTable/index.vue'
 import { checkPremission } from '/src/hooks/usePremission'
 import { formConfig } from './config/search.config'
@@ -81,5 +83,10 @@ fetchRoles()
 <style scoped>
 .search-footer {
   text-align: right;
+}
+
+.header,
+.search-footer {
+  padding: 15px;
 }
 </style>

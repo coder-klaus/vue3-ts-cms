@@ -10,7 +10,7 @@
     :show-header="header"
   >
     <template #header>
-      <el-button v-if="isCreate" class="create-user" type="primary">新建</el-button>
+      <el-button v-if="isCreate" class="create-user" type="primary" @click="createData">新建</el-button>
     </template>
 
     <template #createAt="{ row: { createAt } }">
@@ -25,12 +25,12 @@
       <slot :name="slot" :row="row" />
     </template>
 
-    <template #handler>
-      <el-button type="text" v-if="isEdit">
+    <template #handler="{ row }">
+      <el-button type="text" v-if="isEdit" @click="editData(row)">
         <el-icon><edit /></el-icon>
         编辑
       </el-button>
-      <el-button type="text" v-if="isDelete">
+      <el-button type="text" v-if="isDelete" @click="handleDelete(row.id)">
         <el-icon><delete /></el-icon>
         删除
       </el-button>
@@ -41,11 +41,17 @@
 <script setup lang="ts">
 import { ref, computed, PropType } from 'vue'
 import dayjs from 'dayjs'
+import { delPageData } from '/src/api/fetch'
 import { checkPremission } from '/src/hooks/usePremission'
 import { ITableConfig } from '/src/components/Table/types'
 
+interface IDataType {
+  id: number | string
+  [prop: string]: unknown
+}
+
 // eslint-disable-next-line no-undef
-const emits = defineEmits(['fetchData'])
+const emits = defineEmits(['fetchData', 'delData', 'create', 'edit'])
 
 // eslint-disable-next-line no-undef
 const props = defineProps({
@@ -65,7 +71,7 @@ const props = defineProps({
   },
 
   data: {
-    type: Array,
+    type: Array as PropType<IDataType[]>,
     required: true
   },
 
@@ -127,6 +133,32 @@ const handleCurrentChange = (currentPage: number) => {
     ...pageInfoRef.value,
     ...props.queryData
   })
+}
+
+const handleDelete = async (id: number) => {
+  try {
+    const list = [...props.data]
+    await delPageData(`users/${id}`)
+
+    const item = list.find(item => item.id === id)
+    const index = list.findIndex(item => item.id === id)
+
+    emits('delData', {
+      item,
+      id,
+      index
+    })
+  } catch (e) {
+    if (e instanceof Error) {
+      console.error(e.message)
+    }
+  }
+}
+
+const createData = () => emits('create')
+
+const editData = (row: IDataType) => {
+  emits('edit', row)
 }
 </script>
 

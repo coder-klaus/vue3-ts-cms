@@ -24,7 +24,7 @@ interface IRes {
 const menuRef = ref<IMenu[]>([])
 
 const fetchMenu = async () => {
-  const { data } = await getList<Record<string, unknown>, IRes>('menu', {})
+  const { data } = await getList<Record<string, never>, IRes>('menu', {})
   menuRef.value = data.list
 }
 

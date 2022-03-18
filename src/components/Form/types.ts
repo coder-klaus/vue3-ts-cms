@@ -14,6 +14,7 @@ export interface Config<T> {
   options?: Option[]
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   otherOptions?: any
+  isHidden?: boolean
 }
 
 type Layout =
@@ -28,10 +29,10 @@ type Layout =
       xs: number
     }
 
-export interface FormConfig<T> {
+export interface FormConfig<T = Record<string, never>> {
   configs: Config<T>[]
   labelWidth?: string
   colLayout?: Layout
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  itemStyle: any
+  itemStyle?: any
 }

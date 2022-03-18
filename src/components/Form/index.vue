@@ -1,13 +1,11 @@
 <template>
   <div class="search-bar">
-    <div class="header">
-      <slot name="header" />
-    </div>
+    <slot name="header" />
 
     <el-form ref="formRef" :label-width="labelWidth" class="form">
       <el-row>
         <template v-for="config in configs" :key="config.label">
-          <el-col v-bind="colLayout">
+          <el-col v-if="!config.isHidden" v-bind="colLayout">
             <el-form-item :label="config.label" :style="itemStyle">
               <template v-if="['input', 'password'].includes(config.type)">
                 <el-input
@@ -56,9 +54,7 @@
       </el-row>
     </el-form>
 
-    <div class="footer">
-      <slot name="footer" />
-    </div>
+    <slot name="footer" />
   </div>
 </template>
 
@@ -107,13 +103,6 @@ const updateModelValue = (v: unknown, field: string) => {
 
 <style scoped lang="scss">
 .search-bar {
-  padding: 20px 0;
-
-  .header,
-  .footer {
-    padding: 15px;
-  }
-
   .form {
     padding-top: 22px;
 

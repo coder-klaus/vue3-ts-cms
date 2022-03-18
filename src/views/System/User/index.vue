@@ -1,22 +1,28 @@
 <template>
   <div>
-    <SearchBar v-bind="formConfig" v-model="userRef" @search="search">
-      <template #header> 表单检索 </template>
+    <Form v-bind="formConfig" v-model="searchRef" @search="search">
+      <template #header>
+        <div class="header">表单检索</div>
+      </template>
+
       <template #footer>
         <div class="search-footer">
           <el-button size="small" type="warning" plain @click="reset">重置</el-button>
           <el-button size="small" type="primary" plain @click="search"> 搜索 </el-button>
         </div>
       </template>
-    </SearchBar>
+    </Form>
 
     <FormTable
       :config="tableConfig"
       :data="usersRef"
-      :query-data="userRef"
+      :query-data="searchRef"
       :total="totalRef"
-      @fetchData="fetchUsers"
       pagename="users"
+      @edit="edit"
+      @create="create"
+      @delData="delUser"
+      @fetchData="fetchUsers"
     >
       <template #status="{ row: { enable } }">
         <el-tag :type="enable === 1 ? 'success' : 'danger'">
@@ -24,17 +30,21 @@
         </el-tag>
       </template>
     </FormTable>
+
+    <Modal :title="titleRef" v-model:visible="showDialog" :config="modalConfig" :data="userRef" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import SearchBar from '/src/components/SearchBar/index.vue'
+import Form from '/src/components/Form/index.vue'
 import FormTable from '/src/components/FormTable/index.vue'
+import Modal from '/src/components/Modal/index.vue'
 import { getList } from '../../../api/fetch'
 import { checkPremission } from '/src/hooks/usePremission'
 import { formConfig } from './config/search.config'
 import { tableConfig } from './config/table.config'
+import { modalConfig } from './config/modal.config'
 import { IFetch } from '/src/types'
 import { IUser } from './types'
 
@@ -48,6 +58,9 @@ const usersRef = ref<IUser[]>([])
 
 const isQuery = checkPremission('users', 'query')
 
+const showDialog = ref(false)
+const titleRef = ref('新建用户')
+
 const defaultUser = {
   id: '',
   name: '',
@@ -55,6 +68,14 @@ const defaultUser = {
   createAt: ''
 }
 
+const defaultSearch = {
+  id: '',
+  name: '',
+  cellphone: '',
+  createAt: ''
+}
+
+const searchRef = ref<Partial<IUser>>(defaultSearch)
 const userRef = ref<Partial<IUser>>(defaultUser)
 
 const fetchUsers = async (query: Partial<IUser> = {}) => {
@@ -72,11 +93,38 @@ const fetchUsers = async (query: Partial<IUser> = {}) => {
 }
 
 const reset = async () => {
-  userRef.value = defaultUser
-  fetchUsers(userRef.value)
+  searchRef.value = defaultUser
+  fetchUsers(searchRef.value)
 }
 
-const search = () => fetchUsers(userRef.value)
+const search = () => fetchUsers(searchRef.value)
+
+const delUser = ({ index }: { index: number }) => {
+  usersRef.value.splice(index, 1)
+}
+
+const create = () => {
+  showDialog.value = true
+  titleRef.value = '新建用户'
+
+  const config = modalConfig.formConfig.configs.find(config => config.field === 'password')
+
+  if (config?.isHidden) {
+    config.isHidden = false
+  }
+}
+
+const edit = (row: IUser) => {
+  showDialog.value = true
+  titleRef.value = '编辑用户'
+  userRef.value = row
+
+  const config = modalConfig.formConfig.configs.find(config => config.field === 'password')
+
+  if (config) {
+    config.isHidden = true
+  }
+}
 
 fetchUsers()
 </script>
@@ -84,5 +132,10 @@ fetchUsers()
 <style lang="scss" scoped>
 .search-footer {
   text-align: right;
+}
+
+.header,
+.search-footer {
+  padding: 15px;
 }
 </style>

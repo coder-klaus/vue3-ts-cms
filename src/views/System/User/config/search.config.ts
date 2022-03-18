@@ -1,4 +1,4 @@
-import { FormConfig, Config } from '/src/components/SearchBar/types'
+import { FormConfig, Config } from '../../../../components/Form/types'
 import { IUser } from '../types'
 
 export const configs: Config<IUser>[] = [
