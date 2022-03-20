@@ -138,7 +138,6 @@ const handleCurrentChange = (currentPage: number) => {
 const handleDelete = async (id: number) => {
   try {
     const list = [...props.data]
-    await delPageData(`users/${id}`)
 
     const item = list.find(item => item.id === id)
     const index = list.findIndex(item => item.id === id)

@@ -48,7 +48,7 @@ import FormTable from '/src/components/FormTable/index.vue'
 import Modal from '/src/components/Modal/index.vue'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
-import { getList, patchPageData, createPageData } from '../../../api/fetch'
+import { getList, patchPageData, createPageData, delPageData } from '../../../api/fetch'
 import { checkPremission } from '/src/hooks/usePremission'
 import { formConfig } from './config/search.config'
 import { tableConfig } from './config/table.config'
@@ -76,14 +76,7 @@ const defaultUser = {
   createAt: ''
 }
 
-const defaultSearch = {
-  id: '',
-  name: '',
-  cellphone: '',
-  createAt: ''
-}
-
-const searchRef = ref<Partial<IUser>>(defaultSearch)
+const searchRef = ref<Partial<IUser>>(defaultUser)
 const userRef = ref<Partial<IUser>>(defaultUser)
 
 const getConfig = (key: string) => modalConfig.formConfig.configs.find(config => config.field === key)
@@ -148,13 +141,16 @@ const reset = async () => {
 
 const search = () => fetchUsers(searchRef.value)
 
-const delUser = ({ index }: { index: number }) => {
+const delUser = async ({ index, id }: { index: number; id: number }) => {
   usersRef.value.splice(index, 1)
+  await delPageData(`users/${id}`)
 }
 
 const create = () => {
   showDialog.value = true
   titleRef.value = '新建用户'
+
+  userRef.value = defaultUser
 
   const config = getConfig('password')
 
@@ -184,7 +180,7 @@ const confirm = async (v: IUser) => {
     const { name, cellphone, password, realname, roleId, departmentId } = v
 
     if (v.id) {
-      // edit /users/3
+      // edit user
       const { code: _code } = await patchPageData(`/users/${v.id}`, {
         name,
         cellphone,
@@ -195,7 +191,7 @@ const confirm = async (v: IUser) => {
       })
       code = _code
     } else {
-      // create
+      // create user
       const { code: _code } = await createPageData('/users', {
         name,
         cellphone,

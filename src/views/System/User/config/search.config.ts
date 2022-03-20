@@ -31,18 +31,18 @@ export const configs: Config<IUser>[] = [
       { value: '0', label: '禁用' }
     ],
     field: 'enable'
-  }
+  },
 
-  // {
-  //   type: 'datepicker',
-  //   label: '创建时间',
-  //   otherOptions: {
-  //     startPlaceholder: '开始时间',
-  //     endPlaceholder: '结束时间',
-  //     type: 'daterange'
-  //   },
-  //   field: 'createAt'
-  // }
+  {
+    type: 'datepicker',
+    label: '创建时间',
+    otherOptions: {
+      startPlaceholder: '开始时间',
+      endPlaceholder: '结束时间',
+      type: 'daterange'
+    },
+    field: 'createAt'
+  }
 ]
 
 export const formConfig: FormConfig<IUser> = {

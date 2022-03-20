@@ -9,6 +9,8 @@
   >
     <Form v-bind="config.formConfig" v-model="formData" />
 
+    <slot />
+
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="$emit('update:visible', false)">取消</el-button>

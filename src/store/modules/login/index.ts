@@ -19,10 +19,29 @@ export default defineStore('loginStore', () => {
     localStorage.setItem('userInfo', JSON.stringify(data))
   }
 
+  const calcPressmissions = (menus: IMenu[]) => {
+    const pressmissions: string[] = []
+
+    const rescureMenuToPressmission = (menus: IMenu[]) => {
+      for (const menu of menus) {
+        if (menu.permission) {
+          pressmissions.push(menu.permission)
+        } else if (menu.children) {
+          rescureMenuToPressmission(menu.children)
+        }
+      }
+    }
+
+    rescureMenuToPressmission(menus)
+
+    return pressmissions
+  }
+
   async function fetchMenu(id: number) {
     const { data } = await getMenu(id)
     menusRef.value = data
     localStorage.setItem('menus', JSON.stringify(data))
+    pressmissionsRef.value = calcPressmissions(data)
   }
 
   async function login(account: IAccount) {
@@ -41,24 +60,6 @@ export default defineStore('loginStore', () => {
     }
 
     router.push('/main')
-  }
-
-  const calcPressmissions = (menus: IMenu[]) => {
-    const pressmissions: string[] = []
-
-    const rescureMenuToPressmission = (menus: IMenu[]) => {
-      for (const menu of menus) {
-        if (menu.permission) {
-          pressmissions.push(menu.permission)
-        } else if (menu.children) {
-          rescureMenuToPressmission(menu.children)
-        }
-      }
-    }
-
-    rescureMenuToPressmission(menus)
-
-    return pressmissions
   }
 
   function initStore() {

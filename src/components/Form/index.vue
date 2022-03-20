@@ -11,6 +11,7 @@
                 <el-input
                   v-bind="config.otherOptions"
                   clearable
+                  :placeholder="config.placeholder"
                   :show-password="config.type === 'password'"
                   :model-value="modelValue[config.field as string]"
                   @update:modelValue="updateModelValue($event, config.field as string)"
@@ -23,6 +24,7 @@
                   v-bind="config.otherOptions"
                   clearable
                   class="precent"
+                  :placeholder="config.placeholder"
                   :model-value="modelValue[config.field as string]"
                   @update:modelValue="updateModelValue($event, config.field as string)"
                   @keyup.enter="$emit('search')"
@@ -43,6 +45,7 @@
                   v-bind="config.otherOptions"
                   clearable
                   class="precent"
+                  :placeholder="config.placeholder"
                   :model-value="modelValue[config.field as string]"
                   @update:modelValue="updateModelValue($event, config.field as string)"
                   @keyup.enter="$emit('search')"
