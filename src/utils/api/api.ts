@@ -75,4 +75,8 @@ export default class {
   delete<R = IResponse>(url: string) {
     return this.instance.delete<unknown, R>(url)
   }
+
+  patch<T = unknown, R = IResponse>(url: string, data: T) {
+    return this.instance.patch<unknown, R>(url, data)
+  }
 }

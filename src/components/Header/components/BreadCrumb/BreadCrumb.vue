@@ -25,7 +25,7 @@ defineProps({
 
 <style lang="scss" scoped>
 .bread-crumb {
-  .bread-crumb-item::v-deep {
+  :deep(.bread-crumb-item) {
     .el-breadcrumb__inner {
       font-weight: 400;
     }

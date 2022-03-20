@@ -2,7 +2,7 @@ type ConfigType = 'input' | 'password' | 'select' | 'datepicker'
 
 type Option = {
   label: string
-  value: string
+  value: string | number
 }
 
 export interface Config<T> {

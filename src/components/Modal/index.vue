@@ -12,7 +12,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="$emit('update:visible', false)">取消</el-button>
-        <el-button type="primary" @click="$emit('update:visible', !visible)">确认</el-button>
+        <el-button type="primary" @click="confirm">确认</el-button>
       </span>
     </template>
   </el-dialog>
@@ -24,7 +24,7 @@ import Form from '/src/components/Form/index.vue'
 import { Config } from './types'
 
 // eslint-disable-next-line no-undef
-const emits = defineEmits(['update:visible'])
+const emits = defineEmits(['update:visible', 'update:data', 'confirm'])
 
 // eslint-disable-next-line no-undef
 const props = defineProps({
@@ -54,10 +54,22 @@ const props = defineProps({
   }
 })
 
-const visibleDialog = computed(() => props.visible)
-const formData = computed(() => props.data)
+const visibleDialog = computed({
+  get: () => props.visible,
+  set: v => emits('update:visible', v)
+})
+
+const formData = computed({
+  get: () => props.data,
+  set: v => emits('update:data', v)
+})
 
 const handleDialogClose = () => emits('update:visible', false)
+
+const confirm = () => {
+  emits('update:visible', false)
+  emits('confirm', formData.value)
+}
 </script>
 
 <style scoped></style>
