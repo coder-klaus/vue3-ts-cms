@@ -41,7 +41,6 @@
 <script setup lang="ts">
 import { ref, computed, PropType } from 'vue'
 import dayjs from 'dayjs'
-import { delPageData } from '/src/api/fetch'
 import { checkPremission } from '/src/hooks/usePremission'
 import { ITableConfig } from '/src/components/Table/types'
 
